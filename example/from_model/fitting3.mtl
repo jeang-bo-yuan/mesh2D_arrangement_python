@@ -1,0 +1,112 @@
+# Blender 5.0.0 MTL File: 'Proxy0123.blend'
+# www.blender.org
+
+newmtl (null).001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl Hall.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/stone_clabbing.png
+
+newmtl HallRoof.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/pngtree-wood-stripe-texture-png-image_842775.jpg
+
+newmtl Material.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/brick.png
+
+newmtl Roof_Other.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/light-colored-granite-surface.jpg
+
+newmtl Tower1.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/black-marble.webp
+
+newmtl Tower2.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/stone_clabbing.png
+
+newmtl Windows.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/free-seamless-texture-window22.jpg
+
+newmtl roof.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/black-stone.jpg
+
+newmtl roof.004
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/seamless-stone-texture-gray-venetian-plaster-background-seamless-stone-texture-traditional-venetian-plaster-rock-stone-texture-109075744.webp
+
+newmtl roof3.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/綜合/Building-Main/gray-concrete-texture.jpg
