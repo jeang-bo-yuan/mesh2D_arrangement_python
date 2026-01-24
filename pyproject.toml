@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/arrangement2D"]
+
+[project]
+name="arrangement2D"
+version="0.1.0"
+dependencies=[
+  "shapely>=2.1.0"
+]
+authors=[
+    {name = "Bo Yuan, Jiang", email = "jeangbyj@gmail.com"}
+]
+description="Implement arrangement2D with shapely"
+readme="README.md"
+license-files = ["LICEN[CS]E*", "vendored/licenses/*.txt", "AUTHORS.md"]
+
+[project.optional-dependencies]
+example = [
+    "libigl",
+    "matplotlib"
+]

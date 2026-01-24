@@ -9,7 +9,7 @@ from joblib import Parallel, delayed
 import math
 
 from .config import *
-if ARRANGEMENT_DEBUG:
+if DEBUG:
     import matplotlib.pyplot as plt
     import time
 
@@ -52,7 +52,7 @@ def find_line_points_parallel(edges: list[RAW_EDGE_TYPE], chunk_size: int = 1000
     # 建立空間索引
     tree = shapely.STRtree(lines)
 
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         start = time.perf_counter()
     #############################################################################################################
     # 第一步: 對於每條直線，去和其他可能相交的線求出交點並記錄
@@ -71,7 +71,7 @@ def find_line_points_parallel(edges: list[RAW_EDGE_TYPE], chunk_size: int = 1000
     else:
         intersections : list[list[tuple[int, int, RAW_POINT_TYPE]]] = [find_intersections(edges, unique_pairs)]
 
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         end = time.perf_counter()
         print(f"#Unique Edge Pairs: {len(unique_pairs)}")
         print(f"Find Intersections: {end - start}")
@@ -120,7 +120,7 @@ def split_edges(edges: list[RAW_EDGE_TYPE]) -> list[RAW_EDGE_TYPE]:
 
     result_edges : set[RAW_POINT_TYPE]= set()
 
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         start_perf = time.perf_counter()
 
     # 對於每個線條進行分割
@@ -147,13 +147,13 @@ def split_edges(edges: list[RAW_EDGE_TYPE]) -> list[RAW_EDGE_TYPE]:
         for splitI in range(1, len(split_points)):
             result_edges.add(sorted_tuple(split_points[splitI - 1], split_points[splitI]))
 
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         print(f"#Vertices = {len(vertices)}")
         print(f"#Edges (after split) = {len(result_edges)}")
         end_perf = time.perf_counter()
         print(f"Split Edges: {end_perf - start_perf}")
 
-        if ARRANGEMENT_DEBUG_PLOT:
+        if DEBUG_PLOT:
             from shapely import MultiLineString
             plot_line(MultiLineString([(vertices[i], vertices[j]) for (i, j) in result_edges]))
             plt.title("Line works")
@@ -165,7 +165,7 @@ def polygonize_edges(edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
     """
     將這些邊連成數個 Polygon
     """
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         start = time.perf_counter()
 
     lines = [LineString(e) for e in edges]
@@ -175,12 +175,12 @@ def polygonize_edges(edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
     # for P in polygons:
     #     triangles += shapely.get_parts(shapely.constrained_delaunay_triangles(P)).tolist()
 
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         end = time.perf_counter()
         print(f"Polygonize and Delaunay: {end - start}")
         print(f"#Result Polygons: {len(polygons)}")
 
-        if ARRANGEMENT_DEBUG_PLOT:
+        if DEBUG_PLOT:
             for tri in polygons:
                 plot_polygon(tri, add_points=False)
             plt.title("Arrangement")
@@ -194,7 +194,7 @@ def arrangement2D(raw_edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
     """
     輸入一堆 Polygon 的邊，將 Polygon 圍出的範圍做細分，每一個細分出的區塊彼此不重疊
     """
-    if ARRANGEMENT_DEBUG:
+    if DEBUG:
         print("\n\n== arrangement 2D ==")
     
     # Step1. 分割 Edge Soup
@@ -205,6 +205,9 @@ def arrangement2D(raw_edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
     return polygons
 
 def arrangement2D_polygons(polygons: list[Polygon]) -> list[Polygon]:
+    """
+    輸入一堆 Polygon，將邊界提取出來然後做 arrangement2D
+    """
     edges = []
 
     for poly in polygons:
