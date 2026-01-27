@@ -31,9 +31,19 @@ def point2D_solve_z(point: RAW_POINT_TYPE, equation: tuple[float, float, float, 
 
 def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 0.01) -> list[Polygon]:
     """
-    假設 z 為高度
+    Upper Envelope : 輸入一堆 mesh 的面，找到數個 open surface 把這些輸入的面給蓋住。
+
+    輸入的面假設 xy 平面為地面，z 軸為高度（和 shapely 一樣）。
+
+    演算法：
+    1. 將每個面投影到 xy 平面，並求出 mesh arrangement 2D
+    2. 對於 arrangement 結果的每個三角面，看它被原本輸入的哪些面覆蓋（cover），並將三角面的頂點投影回這些平面上。
+       每個頂點都會被投影數次，而最終只取投影到的最高高度。
+    3. 對於 arrangement 結果的每個三角面，將其每個頂點依前一步求出的高度投影回去。
     
     :param triangulate_first: 是否要先對每個輸入的 Polygon 做三角化（強烈建議開啟此選項，這樣在投影回去時才能較好計算每一面的平面方程式）
+    :param buffer_size: 因為數值問題，在計算 mesh arrangement 時交點可能會偏離原直線一點點，導致 arrangement 的結果可能比原本輸入的三角面還要向外擴。
+                        所以在把頂點投影回去時，把原本的每個平面在 XY 平面上都向外擴 buffer_size 的大小再做覆蓋（cover）檢測。
     """
     if triangulate_first:
         polygons = util.triangulate(polygons)
