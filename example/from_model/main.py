@@ -9,7 +9,7 @@ from arrangement2D.snap import snapEdges
 import os
 
 def main():
-    Vs, Fs = igl.read_triangle_mesh(os.path.join(os.path.dirname(__file__), "fitting3.obj"))
+    Vs, Fs = igl.read_triangle_mesh(os.path.join(os.path.dirname(__file__), "fitting.obj"))
     
     edges = []
     for face in Fs:

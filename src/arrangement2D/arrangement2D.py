@@ -73,7 +73,7 @@ def find_line_points_parallel(edges: list[RAW_EDGE_TYPE], chunk_size: int = 1000
 
     if DEBUG:
         end = time.perf_counter()
-        print(f"#Unique Edge Pairs: {len(unique_pairs)}")
+        print(f"\t#Unique Edge Pairs: {len(unique_pairs)}")
         print(f"Find Intersections: {end - start}")
 
     #############################################################################################################
@@ -148,8 +148,8 @@ def split_edges(edges: list[RAW_EDGE_TYPE]) -> list[RAW_EDGE_TYPE]:
             result_edges.add(sorted_tuple(split_points[splitI - 1], split_points[splitI]))
 
     if DEBUG:
-        print(f"#Vertices = {len(vertices)}")
-        print(f"#Edges (after split) = {len(result_edges)}")
+        print(f"\t#Vertices = {len(vertices)}")
+        print(f"\t#Edges (after split) = {len(result_edges)}")
         end_perf = time.perf_counter()
         print(f"Split Edges: {end_perf - start_perf}")
 
@@ -171,14 +171,10 @@ def polygonize_edges(edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
     lines = [LineString(e) for e in edges]
     polygons = shapely.get_parts(shapely.ops.polygonize(lines)).tolist()
 
-    # triangles = []
-    # for P in polygons:
-    #     triangles += shapely.get_parts(shapely.constrained_delaunay_triangles(P)).tolist()
-
     if DEBUG:
         end = time.perf_counter()
         print(f"Polygonize and Delaunay: {end - start}")
-        print(f"#Result Polygons: {len(polygons)}")
+        print(f"\t#Result Polygons: {len(polygons)}")
 
         if DEBUG_PLOT:
             for tri in polygons:

@@ -9,6 +9,7 @@ packages = ["src/arrangement2D"]
 name="arrangement2D"
 version="0.1.0"
 dependencies=[
+  "numpy",
   "shapely>=2.1.0"
 ]
 authors=[
