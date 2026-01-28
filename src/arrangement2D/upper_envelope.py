@@ -30,7 +30,7 @@ def point2D_solve_z(point: RAW_POINT_TYPE, equation: tuple[float, float, float, 
     a, b, c, d = equation
     return -(a * x + b * y + d) / c
 
-def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 0.01) -> list[Polygon]:
+def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15) -> list[Polygon]:
     """
     Upper Envelope : 輸入一堆 mesh 的面，找到數個 open surface 把這些輸入的面給蓋住。
 
@@ -45,6 +45,9 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
     :param triangulate_first: 是否要先對每個輸入的 Polygon 做三角化（強烈建議開啟此選項，這樣在投影回去時才能較好計算每一面的平面方程式）
     :param buffer_size: 因為數值問題，在計算 mesh arrangement 時交點可能會偏離原直線一點點，導致 arrangement 的結果可能比原本輸入的三角面還要向外擴。
                         所以在把頂點投影回去時，把原本的每個平面在 XY 平面上都向外擴 buffer_size 的大小再做覆蓋（cover）檢測。
+
+                        buffer_size 調大會把更多 arrangement 的面投影到同個平面上，結果「可能」會看起來更 low poly。
+                        但是在遇到幾乎垂直的面時，反而會把旁邊的頂點拉到極端高的地方。
     """
     if triangulate_first:
         polygons = util.triangulate(polygons)
