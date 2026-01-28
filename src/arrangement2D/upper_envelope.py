@@ -1,4 +1,5 @@
-from .config import *
+from .config import RAW_EDGE_TYPE, RAW_POINT_TYPE
+from . import config as cfg
 from .arrangement2D import arrangement2D
 from . import util
 
@@ -65,7 +66,7 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
     A = arrangement2D(edges)
     A = util.triangulate(A)
     
-    if DEBUG:
+    if cfg.DEBUG:
         start_perf = time.perf_counter()
     # Step 2. 將 Arrangement 中的每個平面的頂點投影回 3 維
     tree = STRtree(A)
@@ -91,7 +92,7 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
                     else:
                         point_z_dict[point] = z
 
-    if DEBUG:
+    if cfg.DEBUG:
         end_perf = time.perf_counter()
         print(f"Project Vertex Height: {end_perf - start_perf}")
         start_perf = time.perf_counter()
@@ -108,7 +109,7 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
 
         result.append(Polygon(exterior))
 
-    if DEBUG:
+    if cfg.DEBUG:
         end_perf = time.perf_counter()
         print(f"Construct Result: {end_perf - start_perf}")
     

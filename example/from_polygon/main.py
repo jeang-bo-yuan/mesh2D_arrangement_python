@@ -1,9 +1,9 @@
+from arrangement2D.arrangement2D import arrangement2D_polygons
+from shapely import Polygon
+
 import arrangement2D.config as cfg
 cfg.DEBUG = True
 cfg.DEBUG_PLOT = True
-
-from arrangement2D.arrangement2D import arrangement2D_polygons
-from shapely import Polygon
 
 arrangement2D_polygons([
     Polygon([(0, 0), (1, 0), (1, 1), (0, 1)]),
