@@ -2,6 +2,7 @@
 
 ```
 git clone https://github.com/jeang-bo-yuan/mesh2D_arrangement_python
+cd mesh2D_arrangement_python
 
 # 安裝
 # Install the package.
