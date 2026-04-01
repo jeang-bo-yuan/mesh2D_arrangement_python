@@ -9,9 +9,10 @@ from shapely.strtree import STRtree
 import numpy as np
 
 import math
-
+from typing import Literal
 import time
 
+#region Utility
 def get_plane_equation(poly: Polygon) -> tuple[float, float, float, float]:
     """ 回傳 (a, b, c, d) 代表平面方程式 ax + by + cz + d = 0 """
     p0 = np.array(poly.exterior.coords[0], np.float64)
@@ -29,8 +30,10 @@ def point2D_solve_z(point: RAW_POINT_TYPE, equation: tuple[float, float, float, 
     x, y = point
     a, b, c, d = equation
     return -(a * x + b * y + d) / c
+#endregion
 
-def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15) -> list[Polygon]:
+#region Upper Envelope
+def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15, project_method: Literal['VERTEX', 'FACE']) -> list[Polygon]:
     """
     Upper Envelope : 輸入一堆 mesh 的面，找到數個 open surface 把這些輸入的面給蓋住。
 
@@ -68,32 +71,46 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
     A = arrangement2D(edges)
     A = util.triangulate(A)
     
+    if project_method == 'VERTEX':
+        return project_vertex(polygons, A, buffer_size, minZ)
+    elif project_method == 'FACE':
+        return project_face(polygons, A, buffer_size, minZ)
+    
+    raise ValueError(f"Unknown project method: {project_method}")
+
+def project_vertex(polygons: list[Polygon], A: list[Polygon], buffer_size: float, minZ: float):
+    """
+    將 A 的每個頂點投影回 polygons 中最高的位置    
+    """
     if cfg.DEBUG:
         start_perf = time.perf_counter()
     # Step 2. 將 Arrangement 中的每個平面的頂點投影回 3 維 ################################################
     point_z_dict = dict()
     point_set = set()
+    # 先記錄所有頂點
     for a in A:
         for i in range(1, len(a.exterior.coords)):
-            point_z_dict[a.exterior.coords[i]] = minZ
+            point_z_dict[a.exterior.coords[i]] = minZ # 該頂點預設投回 minZ
             point_set.add(a.exterior.coords[i])
 
     points = [Point(p) for p in point_set]
     tree = STRtree(points)
+    # 對於每個原始的面
     for poly in polygons:
         equation = get_plane_equation(poly)
 
         poly_buffer = poly.buffer(buffer_size)
         shapely.prepare(poly_buffer)
         
+        # 看它蓋住哪些點
         for i in tree.query(poly_buffer, predicate='covers'):
             point_co = points[i].coords[0]
 
+            # 將這些點投影回該面並記錄最大值
             point_z_dict[point_co] = max(
                 point_z_dict[point_co],
                 point2D_solve_z(point_co, equation)
             )
-
 
     if cfg.DEBUG:
         end_perf = time.perf_counter()
@@ -105,17 +122,51 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
     for a in A:
         exterior = []
         for co in a.exterior.coords:
-            if co in point_z_dict.keys():
-                exterior.append((co[0], co[1], point_z_dict[co]))
-            else:
-                exterior.append((co[0], co[1], minZ))
+            exterior.append((co[0], co[1], point_z_dict[co]))
 
         result.append(Polygon(exterior))
 
     if cfg.DEBUG:
         end_perf = time.perf_counter()
         print(f"Construct Result: {end_perf - start_perf}")
-    
+
     return result
 
+def project_face(polygons: list[Polygon], A: list[Polygon], buffer_size: float, minZ: float):
+    """
+    對於 A 中每一面投影回 polygons 中最高的
+    """
+    result = []
 
+    if cfg.DEBUG:
+        start_perf = time.perf_counter()
+
+    # 所有原始的面
+    tree = STRtree([P.buffer(buffer_size) for P in polygons])
+
+    for a in A:
+        # 最好的投影、最好的投影的高度
+        best_proj = [(co[0], co[1], minZ) for co in a.exterior.coords]
+        best_height = minZ
+
+        # 找出被原始的哪些面覆蓋
+        for i in tree.query(a, predicate='covered_by'):
+            plane_eq = get_plane_equation(polygons[i])
+            
+            # 實際投影一次
+            proj = [(co[0], co[1], point2D_solve_z(co, plane_eq)) for co in a.exterior.coords]
+            height = sum(co[2] for co in proj) / len(proj) # 平均高度
+
+            # 若更高
+            if height > best_height:
+                best_proj = proj
+                best_height = height
+        
+        result.append(Polygon(best_proj))
+
+    if cfg.DEBUG:
+        end_perf = time.perf_counter()
+        print(f"Project Face Height: {end_perf - start_perf}")
+
+    return result
+#endregion
