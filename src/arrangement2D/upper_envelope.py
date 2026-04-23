@@ -33,7 +33,7 @@ def point2D_solve_z(point: RAW_POINT_TYPE, equation: tuple[float, float, float, 
 #endregion
 
 #region Upper Envelope
-def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15, project_method: Literal['VERTEX', 'FACE']) -> list[Polygon]:
+def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15, project_method: Literal['VERTEX', 'FACE'] = 'VERTEX') -> list[Polygon]:
     """
     Upper Envelope : 輸入一堆 mesh 的面，找到數個 open surface 把這些輸入的面給蓋住。
 
