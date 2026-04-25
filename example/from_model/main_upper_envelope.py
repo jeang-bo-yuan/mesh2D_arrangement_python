@@ -15,6 +15,8 @@ import os
 METHOD = 'VERTEX' # Recommended buffer_size: 1e-15
 # METHOD = 'FACE'     # Recommended buffer_size: 1e-10
 
+BUFFER_SIZE = 1e-15 if METHOD == 'VERTEX' else 1e-10
+
 INPUT_OBJ = "fitting.obj"
 INPUT_PATH = os.path.join(os.path.dirname(__file__), INPUT_OBJ)
 OUTPUT_OBJ = f"upper_envelope/{INPUT_OBJ}_proj_{METHOD}.obj"
@@ -37,7 +39,7 @@ def main():
 
         polygons.append(Polygon((v1, v2, v3)))
     
-    polygons = upper_envelope(polygons, project_method=METHOD, buffer_size=1e-15)
+    polygons = upper_envelope(polygons, project_method=METHOD, buffer_size=BUFFER_SIZE)
 
     output_obj(polygons)
 

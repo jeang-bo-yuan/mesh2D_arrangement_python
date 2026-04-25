@@ -5,11 +5,16 @@ cfg.DEBUG_PLOT = True
 
 from arrangement2D.arrangement2D import arrangement2D
 from arrangement2D.snap import snapEdges
+from arrangement2D.util import triangulate
+
+from shapely.plotting import plot_polygon
+from shapely import to_wkt
+import matplotlib.pyplot as plt
 
 import os
 
 def main():
-    Vs, Fs = igl.read_triangle_mesh(os.path.join(os.path.dirname(__file__), "fitting.obj"))
+    Vs, Fs = igl.read_triangle_mesh(os.path.join(os.path.dirname(__file__), "project_face_fail.obj"))
     
     edges = []
     for face in Fs:
@@ -22,8 +27,16 @@ def main():
         edges.append([(v2[0], v2[2]), (v3[0], v3[2])])
         edges.append([(v3[0], v3[2]), (v1[0], v1[2])])
     
-    edges = snapEdges(edges, 1e-4)
-    arrangement2D(edges)
+    # edges = snapEdges(edges, 1e-4)
+    A = triangulate(arrangement2D(edges))
+
+    plt.title("Arrangemet (Triangulated)")
+    print("\n\nArrangement to WKT")
+    for p in A:
+        plot_polygon(p)
+        print(to_wkt(p))
+    plt.show()
+
 
 
 if __name__ == "__main__":

@@ -1,0 +1,46 @@
+# Blender 5.0.0 MTL File: 'None'
+# www.blender.org
+
+newmtl lambert16SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/germany010b.jpg
+map_Bump -bm 0.010000 C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/germany010b.jpg
+
+newmtl lighthouse_lambert15SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/brck49pared1.jpg
+map_Bump -bm 0.300000 C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/brck49Lb.jpg
+
+newmtl tower_lambert8SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/entr137M.jpg
+map_Bump -bm 3.000000 C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/entr137M.jpg
+
+newmtl tower_wndw038M_1SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/wndw038M.jpg
+map_Bump -bm 1.000000 C:/Users/jeang/OneDrive/臺科大/賴佑吉實驗室/Model/平屋頂/平輪廓/Free_tower22/wndw038M.jpg
