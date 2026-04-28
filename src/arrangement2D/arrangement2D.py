@@ -72,7 +72,7 @@ def find_line_points_parallel(edges: list[RAW_EDGE_TYPE], chunk_size: int = 1000
     if cfg.DEBUG:
         end = time.perf_counter()
         print(f"\t#Unique Edge Pairs: {len(unique_pairs)}")
-        print(f"Find Intersections: {end - start}")
+        print(f"Find Intersections: {end - start} s")
 
     #############################################################################################################
     # 第二步: 將所有求出的交點記在 line_points
@@ -149,7 +149,7 @@ def split_edges(edges: list[RAW_EDGE_TYPE]) -> list[RAW_EDGE_TYPE]:
         print(f"\t#Vertices = {len(vertices)}")
         print(f"\t#Edges (after split) = {len(result_edges)}")
         end_perf = time.perf_counter()
-        print(f"Split Edges: {end_perf - start_perf}")
+        print(f"Split Edges: {end_perf - start_perf} s")
 
         if cfg.DEBUG_PLOT:
             from shapely import MultiLineString
@@ -173,7 +173,7 @@ def polygonize_edges(edges: list[RAW_EDGE_TYPE]) -> list[Polygon]:
 
     if cfg.DEBUG:
         end = time.perf_counter()
-        print(f"Polygonize and Delaunay: {end - start}")
+        print(f"Polygonize: {end - start} s")
         print(f"\t#Result Polygons: {len(polygons)}")
 
         if cfg.DEBUG_PLOT:
