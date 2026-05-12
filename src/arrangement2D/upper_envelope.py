@@ -34,7 +34,7 @@ def point2D_solve_z(point: RAW_POINT_TYPE, equation: tuple[float, float, float, 
 #endregion
 
 #region Upper Envelope
-def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15, project_method: Literal['VERTEX', 'FACE'] = 'VERTEX') -> list[Polygon]:
+def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_size = 1e-15, project_method: Literal['VERTEX', 'FACE'] = 'VERTEX', overrideMinZ: float | None = None) -> list[Polygon]:
     """
     Upper Envelope : 輸入一堆 mesh 的面，找到數個 open surface 把這些輸入的面給蓋住。
 
@@ -50,6 +50,7 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
 
                         buffer_size 調大會把更多 arrangement 的面投影到同個平面上，結果「可能」會看起來更 low poly。
                         但是在遇到幾乎垂直的面時，反而會把旁邊的頂點拉到極端高的地方。
+    :param overrideMinZ: 若不是 None，則將所有 Project 失敗的 VERTEX 或 FACE 移到 min(`min Z of polygons`, `overrideMinZ`)
     """
     polygons = [P for P in polygons if P.area > 0]
     if triangulate_first:
@@ -57,7 +58,7 @@ def upper_envelope(polygons: list[Polygon], *, triangulate_first = True, buffer_
 
     # 取出每一面的 x y 座標
     edges : list[RAW_EDGE_TYPE] = []
-    minZ = math.inf
+    minZ = overrideMinZ or math.inf
 
     for poly in polygons:
         for i in range(1, len(poly.exterior.coords)):
